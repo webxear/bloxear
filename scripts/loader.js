@@ -1,4 +1,3 @@
-
 function desanitizeAndInjectCSS(htmlString, cssString) {
   const desanitizedHtml = htmlString
     .replace(/&lt;/g, '<')
@@ -354,8 +353,9 @@ async function loader() {
     const designData = await response.json();
     console.log("designData", designData);
 
-    const parseDesignData = JSON.parse(designData.data);
+    const parseDesignData = JSON.parse(designData.data.designData);
     const generateHTML = desanitizeAndInjectCSS(parseDesignData.html, parseDesignData.css);
+    console.log("html", generateHTML)
     document.write(generateHTML);
     
     // Process dynamic containers after HTML is rendered
