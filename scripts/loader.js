@@ -215,6 +215,25 @@ function sortData(data, sortBy, sortOrder) {
 }
 
 /**
+ * Apply character limit to text content, excluding HTML tags
+ */
+function applyCharacterLimit(value, limit) {
+  if (!limit || limit <= 0) return value;
+  
+  const textOnly = value.replace(/<[^>]*>/g, '');
+  
+  if (textOnly.length <= limit) {
+    return value;
+  }
+  
+  if (value !== textOnly) {
+    return textOnly.substring(0, limit) + '...';
+  }
+  
+  return value.substring(0, limit) + '...';
+}
+
+/**
  * Populate template with data
  */
 function populateTemplate(template, itemData) {
@@ -244,7 +263,9 @@ function populateTemplate(template, itemData) {
           if (fieldPath.includes('url') || fieldPath.includes('link') || fieldPath.includes('href')) {
             element.href = value;
           } else {
-            element.textContent = value;
+            const limit = parseInt(element.getAttribute('data-bind-limit'));
+            const limitedValue = applyCharacterLimit(value, limit);
+            element.textContent = limitedValue;
           }
           break;
           
@@ -253,8 +274,9 @@ function populateTemplate(template, itemData) {
           break;
           
         default:
-          // For text elements (h1, h2, h3, p, span, div, etc.)
-          element.textContent = value;
+          const limit = parseInt(element.getAttribute('data-bind-limit'));
+          const limitedValue = applyCharacterLimit(value, limit);
+          element.textContent = limitedValue;
           break;
       }
     }
