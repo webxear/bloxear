@@ -136,7 +136,8 @@ async function fetchDynamicData(dataType) {
     'posts': `/api/v1/design/dynamic/posts`,
     'authors': `/api/v1/design/dynamic/authors`,
     'tags': `/api/v1/design/dynamic/tags`,
-    'pages': `/api/v1/design/dynamic/pages`
+    'pages': `/api/v1/design/dynamic/pages`,
+    'nav': `/api/v1/design/dynamic/nav`
   };
 
   const endpoint = endpoints[dataType];
